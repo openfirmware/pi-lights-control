@@ -3,9 +3,10 @@ module PiLightsControl
     attr_accessor :repeat_count
 
     def initialize(pin, options = {})
-      RPi::GPIO.set_numbering options[:numbering] || :board
+      RPi::GPIO.set_numbering(options[:numbering] || :board)
       @repeat_count = 6
       @pin = pin
+      RPi::GPIO.setup @pin, as: :output
     end
 
     def power_off
