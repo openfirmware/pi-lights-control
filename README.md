@@ -28,9 +28,64 @@ You can use this gem in two ways, as a Ruby library or as an executable.
 
 ### Executable Usage
 
-Using the executable from the command line allows you to quickly test the library.
+Using the executable from the command line allows you to quickly test the library. After installing the gem, the `pi-lights-control` binary will be available in your gem bin path.
 
-TODO
+```shell
+$ pi-lights-control
+NAME
+    pi-lights-control - Control Home Collection Lights over GPIO and RF Transmitter
+
+SYNOPSIS
+    pi-lights-control [global options] command [command options] [arguments...]
+
+GLOBAL OPTIONS
+    --help        - Show this message
+    -p, --pin=arg - GPIO pin number for RF Transmitter. Mandatory. (default: none)
+
+COMMANDS
+    help    - Shows a list of commands or help for one command
+    off     - Turn lights off
+    on      - Turn lights on
+    program - Run a lights program
+    sync    - Sync multiple light sets
+```
+
+The `--pin` argument is mandatory as all the commands need to know which pin to control. The `off`, `on` commands should be self-explanatory.
+
+The `sync` command will send a code that resets all lights to the same state.
+
+The `program` command has multiple sub-commands:
+
+```shell
+$ pi-lights-control help program
+NAME
+    program - Run a lights program
+
+SYNOPSIS
+    pi-lights-control [global options] program blink_steady
+    pi-lights-control [global options] program combination
+    pi-lights-control [global options] program fast_blink
+    pi-lights-control [global options] program fast_fade
+    pi-lights-control [global options] program slow_blink
+    pi-lights-control [global options] program slow_fade
+    pi-lights-control [global options] program steady
+    pi-lights-control [global options] program step_fade
+
+DESCRIPTION
+    Sends a command to run a specific lights program
+
+COMMANDS
+    blink_steady - Blink Steady
+    combination  - Combination
+    fast_blink   - Fast Blink
+    fast_fade    - Fast Fade
+    slow_blink   - Slow Blink
+    slow_fade    - Slow Fade
+    steady       - Steady
+    step_fade    - Step Fade
+```
+
+Remember to send the `--pin` argument!
 
 ### Library API
 
@@ -80,6 +135,8 @@ c.program(:fast_fade) # Lights fade from off to on at a fast rate
 c.program(:blink_steady) # Lights blink twice, then are steady for a second or two
 c.program(:step_fade) # Lights fade from off to on but at discrete brightness steps instead of a continuous increase/decrease
 ```
+
+(Secret: The default remote actually sends 16 different codes! However codes 9–16 trigger the same eight programs as codes 1–8.)
 
 ## Roadmap
 
