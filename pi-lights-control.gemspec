@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Control one model of xmas lights via Raspberry Pi}
   spec.description   = %q{Control a specific model of Christmas lights using a Raspberry Pi and a 433.920 MHz transmitter connected via GPIO.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/openfirmware/pi-lights-control"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
