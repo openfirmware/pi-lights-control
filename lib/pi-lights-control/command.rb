@@ -6,7 +6,6 @@ module PiLightsControl
       RPi::GPIO.set_numbering(options[:numbering] || :board)
       @repeat_count = 6
       @pin = pin
-      RPi::GPIO.setup @pin, as: :output
     end
 
     def power_off
@@ -29,6 +28,7 @@ module PiLightsControl
     private
 
     def transmit_command(command)
+      RPi::GPIO.setup @pin, as: :output
       @repeat_count.times do
         command.each do |code|
           high_length = PiLightsControl::CODE_TABLE[code][0]
@@ -41,6 +41,7 @@ module PiLightsControl
           sleep(low_length * PiLightsControl::TIME_DELAY / 1000000.0)
         end
       end
+      RPi::GPIO.clean_up @pin
     end
   end
 end

@@ -13,19 +13,12 @@ describe PiLightsControl::Command do
 
   it "sets the default GPIO numbering scheme" do
     expect(RPi::GPIO).to receive(:set_numbering).with(:board)
-    expect(RPi::GPIO).to receive(:setup).with(12, as: :output)
     c = PiLightsControl::Command.new(12)
   end
 
   it "sets an alternate GPIO numbering scheme" do
     expect(RPi::GPIO).to receive(:set_numbering).with(:bcm)
-    expect(RPi::GPIO).to receive(:setup).with(12, as: :output)
     c = PiLightsControl::Command.new(12, { numbering: :bcm })
-  end
-
-  it "sets the pin mode to output" do
-    expect(RPi::GPIO).to receive(:setup).with(12, as: :output)
-    c = PiLightsControl::Command.new(12)
   end
 
   it "defaults to repeat commands six times" do
@@ -44,6 +37,8 @@ describe PiLightsControl::Command do
       expect_any_instance_of(PiLightsControl::Command).to receive(:sleep).at_least(:once)
       expect(RPi::GPIO).to receive(:set_high).at_least(:once)
       expect(RPi::GPIO).to receive(:set_low).at_least(:once)
+      expect(RPi::GPIO).to receive(:setup).with(12, as: :output).once
+      expect(RPi::GPIO).to receive(:clean_up).with(12).once
       @command = PiLightsControl::Command.new(12)
     end
 
