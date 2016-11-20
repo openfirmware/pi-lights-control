@@ -4,3 +4,4 @@
 
 * Support power on/off RF commands
 * Support multiple light set syncing
+* Support eight default light programs
