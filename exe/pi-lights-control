@@ -1,125 +1,61 @@
 #!/usr/bin/env ruby
 
-require "gli"
-require "pi-lights-control"
+require 'gli'
+require 'pi-lights-control'
 
 include GLI::App
 
-program_desc "Control Home Collection Lights over GPIO and RF Transmitter"
+program_desc 'Control Home Collection Lights over GPIO and RF Transmitter'
 
-desc "GPIO pin number for RF Transmitter. Mandatory."
-flag [:p,:pin], type: Integer
+desc 'GPIO pin number for RF Transmitter. Mandatory.'
+flag [:p, :pin], type: Integer
 
-desc "Turn lights on"
-long_desc "Sends a \"power on\" command to the lights"
+desc 'Turn lights on'
+long_desc 'Sends a "power on" command to the lights'
 command :on do |c|
-  c.action do |global_options,options,args|
-    help_now!("No pin number specified") if global_options[:pin].nil?
+  c.action do |global_options|
+    help_now!('No pin number specified') if global_options[:pin].nil?
     command = PiLightsControl::Command.new(global_options[:pin].to_i)
     command.power_on
   end
 end
 
-desc "Turn lights off"
-long_desc "Sends a \"power off\" command to the lights"
+desc 'Turn lights off'
+long_desc 'Sends a "power off" command to the lights'
 command :off do |c|
-  c.action do |global_options,options,args|
-    help_now!("No pin number specified") if global_options[:pin].nil?
+  c.action do |global_options|
+    help_now!('No pin number specified') if global_options[:pin].nil?
     command = PiLightsControl::Command.new(global_options[:pin].to_i)
     command.power_off
   end
 end
 
-desc "Sync multiple light sets"
-long_desc "Sends a \"sync\" command to any lights in range"
+desc 'Sync multiple light sets'
+long_desc 'Sends a "sync" command to any lights in range'
 command :sync do |c|
-  c.action do |global_options,options,args|
-    help_now!("No pin number specified") if global_options[:pin].nil?
+  c.action do |global_options|
+    help_now!('No pin number specified') if global_options[:pin].nil?
     command = PiLightsControl::Command.new(global_options[:pin].to_i)
     command.sync_lights
   end
 end
 
-desc "Run a lights program"
-long_desc "Sends a command to run a specific lights program"
+desc 'Run a lights program'
+long_desc %(
+Sends a command to run a specific lights program. One of 'combination',
+'steady', 'slow_blink', 'fast_blink', 'slow_fade', 'fast_fade',
+'blink_steady', or 'step_fade'.
+)
 command :program do |c|
-  c.desc "Combination"
-  c.long_desc "Cycles through the other 7 programs"
-  c.command :combination do |p|
-    p.action do |global_options,options,args|
-      help_now!("No pin number specified") if global_options[:pin].nil?
+  c.action do |global_options, _options, args|
+    program_name = args[0]
+    case program_name
+    when 'combination', 'steady', 'slow_blink', 'fast_blink',
+         'slow_fade', 'fast_fade', 'blink_steady', 'step_fade'
       command = PiLightsControl::Command.new(global_options[:pin].to_i)
-      command.program(:combination)
-    end
-  end
-
-  c.desc "Steady"
-  c.long_desc "Lights are continuously on"
-  c.command :steady do |p|
-    p.action do |global_options,options,args|
-      help_now!("No pin number specified") if global_options[:pin].nil?
-      command = PiLightsControl::Command.new(global_options[:pin].to_i)
-      command.program(:steady)
-    end
-  end
-
-  c.desc "Slow Blink"
-  c.long_desc "Lights are on 1/2 second, then off 1/2 second"
-  c.command :slow_blink do |p|
-    p.action do |global_options,options,args|
-      help_now!("No pin number specified") if global_options[:pin].nil?
-      command = PiLightsControl::Command.new(global_options[:pin].to_i)
-      command.program(:slow_blink)
-    end
-  end
-
-  c.desc "Fast Blink"
-  c.long_desc "Lights blink on/off much faster"
-  c.command :fast_blink do |p|
-    p.action do |global_options,options,args|
-      help_now!("No pin number specified") if global_options[:pin].nil?
-      command = PiLightsControl::Command.new(global_options[:pin].to_i)
-      command.program(:fast_blink)
-    end
-  end
-
-  c.desc "Slow Fade"
-  c.long_desc "Lights fade from off to on at a slow rate"
-  c.command :slow_fade do |p|
-    p.action do |global_options,options,args|
-      help_now!("No pin number specified") if global_options[:pin].nil?
-      command = PiLightsControl::Command.new(global_options[:pin].to_i)
-      command.program(:slow_fade)
-    end
-  end
-
-  c.desc "Fast Fade"
-  c.long_desc "Lights fade from off to on at a fast rate"
-  c.command :fast_fade do |p|
-    p.action do |global_options,options,args|
-      help_now!("No pin number specified") if global_options[:pin].nil?
-      command = PiLightsControl::Command.new(global_options[:pin].to_i)
-      command.program(:fast_fade)
-    end
-  end
-
-  c.desc "Blink Steady"
-  c.long_desc "Lights blink twice, then are steady for a second or two"
-  c.command :blink_steady do |p|
-    p.action do |global_options,options,args|
-      help_now!("No pin number specified") if global_options[:pin].nil?
-      command = PiLightsControl::Command.new(global_options[:pin].to_i)
-      command.program(:blink_steady)
-    end
-  end
-
-  c.desc "Step Fade"
-  c.long_desc "Lights fade from off to on but at discrete brightness steps instead of a continuous increase/decrease"
-  c.command :step_fade do |p|
-    p.action do |global_options,options,args|
-      help_now!("No pin number specified") if global_options[:pin].nil?
-      command = PiLightsControl::Command.new(global_options[:pin].to_i)
-      command.program(:step_fade)
+      command.program(program_name.to_sym)
+    else
+      help_now!('Unknown program name')
     end
   end
 end
