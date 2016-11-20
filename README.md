@@ -52,6 +52,14 @@ c = PiLightsControl::Command.new(12)
 c.repeat_count = 8
 ```
 
+Turning the lights on or off can be accessed using simple commands:
+
+```ruby
+c = PiLightsControl::Command.new(12)
+c.power_on
+c.power_off
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

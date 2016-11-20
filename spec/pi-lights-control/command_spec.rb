@@ -31,4 +31,18 @@ describe PiLightsControl::Command do
     c.repeat_count = 8
     expect(c.repeat_count).to be 8
   end
+
+  it "supports power on command" do
+    expect(RPi::GPIO).to receive(:set_high).at_least(:once)
+    expect(RPi::GPIO).to receive(:set_low).at_least(:once)
+    c = PiLightsControl::Command.new(0)
+    c.power_on
+  end
+
+  it "supports power off command" do
+    expect(RPi::GPIO).to receive(:set_high).at_least(:once)
+    expect(RPi::GPIO).to receive(:set_low).at_least(:once)
+    c = PiLightsControl::Command.new(0)
+    c.power_off
+  end
 end
