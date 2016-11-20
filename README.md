@@ -45,6 +45,13 @@ c = PiLightsControl::Command.new(12) # => :board numbering
 c = PiLightsControl::Command.new(10, { numbering: :bcm }) # => :bcm numbering
 ```
 
+The `Command` class will default to repeating codes six times, as that was a reliable count used in testing. You can however change it:
+
+```ruby
+c = PiLightsControl::Command.new(12)
+c.repeat_count = 8
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

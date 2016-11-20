@@ -20,4 +20,15 @@ describe PiLightsControl::Command do
     expect(RPi::GPIO).to receive(:set_numbering).with(:bcm)
     c = PiLightsControl::Command.new(0, { numbering: :bcm })
   end
+
+  it "defaults to repeat commands six times" do
+    c = PiLightsControl::Command.new(0)
+    expect(c.repeat_count).to be 6
+  end
+
+  it "supports custom repeat counts" do
+    c = PiLightsControl::Command.new(0)
+    c.repeat_count = 8
+    expect(c.repeat_count).to be 8
+  end
 end
