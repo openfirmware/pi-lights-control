@@ -17,7 +17,7 @@ module PiLightsControl
     end
 
     def program(name)
-      program_name = "program_#{name.to_s}"
+      program_name = "program_#{name}"
       transmit_command(PiLightsControl::COMMAND_TABLE[program_name.to_sym])
     end
 
@@ -35,10 +35,10 @@ module PiLightsControl
           low_length = PiLightsControl::CODE_TABLE[code][1]
 
           RPi::GPIO.set_high @pin
-          sleep(high_length * PiLightsControl::TIME_DELAY / 1000000.0)
+          sleep(high_length * PiLightsControl::TIME_DELAY / 1E6)
 
           RPi::GPIO.set_low @pin
-          sleep(low_length * PiLightsControl::TIME_DELAY / 1000000.0)
+          sleep(low_length * PiLightsControl::TIME_DELAY / 1E6)
         end
       end
       RPi::GPIO.clean_up @pin
