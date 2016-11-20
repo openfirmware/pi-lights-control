@@ -60,6 +60,13 @@ c.power_on
 c.power_off
 ```
 
+Synchronizing lights will cause any light sets that receive the command to reset to a default state, ensuring all lights are in a "fresh slate".
+
+```ruby
+c = PiLightsControl::Command.new(12)
+c.sync_lights
+```
+
 ## Roadmap
 
 For v0.1.0:

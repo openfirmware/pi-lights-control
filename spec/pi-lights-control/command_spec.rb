@@ -45,4 +45,11 @@ describe PiLightsControl::Command do
     c = PiLightsControl::Command.new(0)
     c.power_off
   end
+
+  it "supports sync lights command" do
+    expect(RPi::GPIO).to receive(:set_high).at_least(:once)
+    expect(RPi::GPIO).to receive(:set_low).at_least(:once)
+    c = PiLightsControl::Command.new(0)
+    c.sync_lights
+  end
 end

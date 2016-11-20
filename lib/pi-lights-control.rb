@@ -12,7 +12,8 @@ module PiLightsControl
   }
   COMMAND_TABLE = {
     power_off: [3,0,1,0,1,1,0,0,1,1,1,0,1,0,0,0,1,2],
-    power_on: [3,0,1,0,1,1,0,0,1,1,1,0,1,0,0,0,0,2]
+    power_on: [3,0,1,0,1,1,0,0,1,1,1,0,1,0,0,0,0,2],
+    sync_lights: [3,0,0,1,1,0,1,1,1,0,0,0,1,1,1,0,0,2]
   }
   TIME_DELAY = 120 # microseconds
 end

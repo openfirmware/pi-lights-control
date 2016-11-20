@@ -16,6 +16,10 @@ module PiLightsControl
       transmit_command(PiLightsControl::COMMAND_TABLE[:power_on])
     end
 
+    def sync_lights
+      transmit_command(PiLightsControl::COMMAND_TABLE[:sync_lights])
+    end
+
     private
 
     def transmit_command(command)
