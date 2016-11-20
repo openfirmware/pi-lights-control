@@ -60,6 +60,21 @@ c.power_on
 c.power_off
 ```
 
+## Roadmap
+
+For v0.1.0:
+
+* Support power on/off for lights
+* Support all light programs and sync
+
+For v0.2.0:
+
+* Add executable
+
+For v0.3.0:
+
+* Any cleanup/refactoring before v1.0
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
