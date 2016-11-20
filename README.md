@@ -67,6 +67,20 @@ c = PiLightsControl::Command.new(12)
 c.sync_lights
 ```
 
+There are eight different programs that can be configured for the lights.
+
+```ruby
+c = PiLightsControl::Command.new(12)
+c.program(:combination) # Cycles through the other 7 programs
+c.program(:steady) # Lights are continuously on
+c.program(:slow_blink) # Lights are on 1/2 second, then off 1/2 second
+c.program(:fast_blink) # Lights blink on/off much faster
+c.program(:slow_fade) # Lights fade from off to on at a slow rate
+c.program(:fast_fade) # Lights fade from off to on at a fast rate
+c.program(:blink_steady) # Lights blink twice, then are steady for a second or two
+c.program(:step_fade) # Lights fade from off to on but at discrete brightness steps instead of a continuous increase/decrease
+```
+
 ## Roadmap
 
 For v0.1.0:

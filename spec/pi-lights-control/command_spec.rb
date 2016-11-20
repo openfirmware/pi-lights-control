@@ -32,24 +32,56 @@ describe PiLightsControl::Command do
     expect(c.repeat_count).to be 8
   end
 
-  it "supports power on command" do
-    expect(RPi::GPIO).to receive(:set_high).at_least(:once)
-    expect(RPi::GPIO).to receive(:set_low).at_least(:once)
-    c = PiLightsControl::Command.new(0)
-    c.power_on
-  end
+  describe "RF Commands" do
+    before(:each) do
+      expect_any_instance_of(PiLightsControl::Command).to receive(:sleep).at_least(:once)
+      expect(RPi::GPIO).to receive(:set_high).at_least(:once)
+      expect(RPi::GPIO).to receive(:set_low).at_least(:once)
+      @command = PiLightsControl::Command.new(0)
+    end
 
-  it "supports power off command" do
-    expect(RPi::GPIO).to receive(:set_high).at_least(:once)
-    expect(RPi::GPIO).to receive(:set_low).at_least(:once)
-    c = PiLightsControl::Command.new(0)
-    c.power_off
-  end
+    it "supports power on command" do
+      @command.power_on
+    end
 
-  it "supports sync lights command" do
-    expect(RPi::GPIO).to receive(:set_high).at_least(:once)
-    expect(RPi::GPIO).to receive(:set_low).at_least(:once)
-    c = PiLightsControl::Command.new(0)
-    c.sync_lights
+    it "supports power off command" do
+      @command.power_off
+    end
+
+    it "supports sync lights command" do
+      @command.sync_lights
+    end
+
+    it "supports combination program command" do
+      @command.program(:combination)
+    end
+
+    it "supports steady program command" do
+      @command.program(:steady)
+    end
+
+    it "supports slow blink program command" do
+      @command.program(:slow_blink)
+    end
+
+    it "supports fast blink program command" do
+      @command.program(:fast_blink)
+    end
+
+    it "supports slow fade program command" do
+      @command.program(:slow_fade)
+    end
+
+    it "supports fast fade program command" do
+      @command.program(:fast_fade)
+    end
+
+    it "supports blink steady program command" do
+      @command.program(:blink_steady)
+    end
+
+    it "supports step fade program command" do
+      @command.program(:step_fade)
+    end
   end
 end
