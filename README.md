@@ -1,6 +1,6 @@
 # Pi Lights Control
 
-This gem provides an executable and a library for sending radio frequency commands from a Raspberry Pi connected with a 433.920 MHz transmitter to one or more sets of Home Collection Remote Control Christmas Lights.
+This gem provides an executable and a library for sending radio frequency commands from a Raspberry Pi connected with a 433.920 MHz transmitter to one or more sets of Home Collection Remote Control Christmas Lights (Product #151-3478-6). I have only tested it with the C9 light set, it *might* work with the C6 light set too.
 
 The gem should be compatible with any Raspberry Pi that has GPIO pins. It has been tested with a 433.920 MHz FS1000A module (pictured below) for Arduino/Raspberry Pi compatible devices. It **will not** build on MacOS as epoll is only supported on Linux.
 
