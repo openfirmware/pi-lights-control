@@ -2,7 +2,7 @@
 
 This gem provides an executable and a library for sending radio frequency commands from a Raspberry Pi connected with a 433.920 MHz transmitter to one or more sets of Home Collection Remote Control Christmas Lights.
 
-The gem should be compatible with any Raspberry Pi that has GPIO pins. It has been tested with a 433.920 MHz FS1000A module (pictured below) for Arduino/Raspberry Pi compatible devices.
+The gem should be compatible with any Raspberry Pi that has GPIO pins. It has been tested with a 433.920 MHz FS1000A module (pictured below) for Arduino/Raspberry Pi compatible devices. It **will not** build on MacOS as epoll is only supported on Linux.
 
 ![FS1000A Receiver/Transmitter Set](https://www.jamesbadger.ca/images/FS1000A.jpg)
 
@@ -24,7 +24,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You can use this gem in two ways, as a Ruby library or as an executable.
+
+### Executable Usage
+
+Using the executable from the command line allows you to quickly test the library.
+
+TODO
+
+### Library API
+
+Alternatively, you can build applications that integrate this library.
+
+#### Command Class
+
+The `Command` class sets up a single GPIO pin as the output control for a transmitter. It is initialized with the Pin number (defaulting to board numbering). It also supports BCM pin numbering.
+
+```ruby
+c = PiLightsControl::Command.new(12) # => :board numbering
+c = PiLightsControl::Command.new(10, { numbering: :bcm }) # => :bcm numbering
+```
 
 ## Development
 
