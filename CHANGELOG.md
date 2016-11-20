@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.0 (2016 Nov 20)
+
+* Finalize API
+* Clean up Ruby formatting
+
 ## v0.2.0 (2016 Nov 19)
 
 * Add CLI tool for controlling lights
